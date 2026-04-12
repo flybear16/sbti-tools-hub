@@ -1,20 +1,26 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getToolBySlug, getTools } from '@/lib/mock-data'
+import { getToolBySlug, getTools } from '@/lib/db'
 import ToolCard from '@/components/ToolCard'
+import ReviewForm from '@/components/ReviewForm'
+import ReviewList from '@/components/ReviewList'
+import ToolCTA from '@/components/ToolCTA'
+import { isSupabaseConfigured } from '@/lib/supabase'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 // 生成所有工具的静态路径
 export async function generateStaticParams() {
-  return getTools().map(tool => ({ slug: tool.slug }))
+  const tools = await getTools()
+  return tools.map(tool => ({ slug: tool.slug }))
 }
 
 // SEO metadata
 export async function generateMetadata({ params }: Props) {
-  const tool = getToolBySlug(params.slug)
+  const { slug } = await params
+  const tool = await getToolBySlug(slug)
   if (!tool) return {}
   return {
     title: `${tool.name} - SBTI测评工具导航`,
@@ -22,12 +28,13 @@ export async function generateMetadata({ params }: Props) {
   }
 }
 
-export default function ToolDetailPage({ params }: Props) {
-  const tool = getToolBySlug(params.slug)
+export default async function ToolDetailPage({ params }: Props) {
+  const { slug } = await params
+  const tool = await getToolBySlug(slug)
   if (!tool) notFound()
 
   // 相关推荐（同分类，排除自己）
-  const related = getTools()
+  const related = (await getTools())
     .filter(t => t.category === tool.category && t.id !== tool.id)
     .slice(0, 3)
 
@@ -139,16 +146,9 @@ export default function ToolDetailPage({ params }: Props) {
 
           {/* 右侧边栏 */}
           <div className="space-y-6">
-            {/* 主CTA */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg sticky top-6">
-              <a
-                href={tool.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full py-4 text-center bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-lg rounded-xl hover:from-orange-600 hover:to-amber-600 transition-all shadow-md hover:shadow-xl"
-              >
-                🚀 立即开始测试
-              </a>
+              {/* 主CTA */}
+              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg sticky top-6">
+                <ToolCTA url={tool.url} toolId={tool.id} toolName={tool.name} isAvailable={tool.isAvailable} />
               <p className="text-center text-xs text-gray-400 mt-3">
                 跳转到 {tool.name} 官方页面
               </p>
@@ -197,6 +197,21 @@ export default function ToolDetailPage({ params }: Props) {
               {related.map(t => (
                 <ToolCard key={t.id} tool={t} />
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* 用户评价区 */}
+        {isSupabaseConfigured() && (
+          <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <ReviewForm toolId={tool.id} toolName={tool.name} />
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
+              <h3 className="font-bold text-lg mb-4">💬 用户评价</h3>
+              <ReviewList
+                toolId={tool.id}
+                initialScore={tool.score}
+                initialReviewCount={tool.reviewCount}
+              />
             </div>
           </div>
         )}
