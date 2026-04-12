@@ -1,23 +1,11 @@
 'use client'
 
-import Link from 'next/link'
-
 interface Props {
   url: string
-  toolId: string
-  toolName: string
   isAvailable: boolean
 }
 
-export default function ToolCTA({ url, toolId, toolName, isAvailable }: Props) {
-  const handleClick = () => {
-    fetch('/api/clicks', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ toolId, referer: window.location.href }),
-    }).catch(() => {})
-  }
-
+export default function ToolCTA({ url, isAvailable }: Props) {
   if (!isAvailable) {
     return (
       <>
@@ -35,16 +23,13 @@ export default function ToolCTA({ url, toolId, toolName, isAvailable }: Props) {
   }
 
   return (
-    <>
-      <Link
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={handleClick}
-        className="block w-full py-4 text-center bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-lg rounded-xl hover:from-orange-600 hover:to-amber-600 transition-all shadow-md hover:shadow-xl"
-      >
-        🚀 立即开始测试
-      </Link>
-    </>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block w-full py-4 text-center bg-gradient-to-r from-orange-500 to-amber-500 text-white font-black text-lg rounded-xl hover:from-orange-600 hover:to-amber-600 transition-all shadow-md hover:shadow-xl"
+    >
+      🚀 立即开始测试
+    </a>
   )
 }

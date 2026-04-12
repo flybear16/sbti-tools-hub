@@ -2,10 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getToolBySlug, getTools } from '@/lib/db'
 import ToolCard from '@/components/ToolCard'
-import ReviewForm from '@/components/ReviewForm'
-import ReviewList from '@/components/ReviewList'
 import ToolCTA from '@/components/ToolCTA'
-import { isSupabaseConfigured } from '@/lib/supabase'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -148,7 +145,7 @@ export default async function ToolDetailPage({ params }: Props) {
           <div className="space-y-6">
               {/* 主CTA */}
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg sticky top-6">
-                <ToolCTA url={tool.url} toolId={tool.id} toolName={tool.name} isAvailable={tool.isAvailable} />
+                <ToolCTA url={tool.url} isAvailable={tool.isAvailable} />
               <p className="text-center text-xs text-gray-400 mt-3">
                 跳转到 {tool.name} 官方页面
               </p>
@@ -201,20 +198,6 @@ export default async function ToolDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* 用户评价区 */}
-        {isSupabaseConfigured() && (
-          <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <ReviewForm toolId={tool.id} toolName={tool.name} />
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
-              <h3 className="font-bold text-lg mb-4">💬 用户评价</h3>
-              <ReviewList
-                toolId={tool.id}
-                initialScore={tool.score}
-                initialReviewCount={tool.reviewCount}
-              />
-            </div>
-          </div>
-        )}
       </div>
 
       {/* 底部 */}

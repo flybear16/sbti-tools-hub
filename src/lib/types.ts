@@ -18,29 +18,11 @@ export interface Tool {
   score: number // 1-5，平均分
   reviewCount: number
   viewCount: number
-  clickCount: number  // 新增：跳转点击数
+  clickCount: number
   status: 'pending' | 'approved' | 'rejected'
-  isAvailable: boolean  // 新增：链接是否可用
-  lastCheckedAt: string | null  // 新增：最近检测时间
+  isAvailable: boolean
   createdAt: string
   updatedAt: string
-}
-
-// 用户评价
-export interface Review {
-  id: string
-  toolId: string
-  score: number
-  comment: string
-  createdAt: string
-}
-
-// 点评汇总（用于详情页展示）
-export interface ReviewSummary {
-  toolId: string
-  averageScore: number
-  totalCount: number
-  recentComments: string[]
 }
 
 // 分类
@@ -69,12 +51,4 @@ export interface Article {
   content: string
   metaDescription: string
   createdAt: string
-}
-
-// 死链检测结果
-export interface LinkCheckResult {
-  toolId: string
-  url: string
-  isAvailable: boolean
-  checkedAt: string
 }
