@@ -1,35 +1,176 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* ============================================
+   Claude Design System — SBTI Tools Hub
+   Warm Terracotta + Parchment Theme
+   ============================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Claude Core Palette - Light Mode */
+  --parchment: #f5f4ed;
+  --ivory: #faf9f5;
+  --white: #ffffff;
+  --warm-sand: #e8e6dc;
+  
+  --near-black: #141413;
+  --charcoal-warm: #4d4c48;
+  --olive-gray: #5e5d59;
+  --stone-gray: #87867f;
+  
+  --terracotta: #c96442;
+  --coral-accent: #d97757;
+  --border-cream: #f0eee6;
+  --border-warm: #e8e6dc;
+  
+  /* Semantic */
+  --ring-warm: #d1cfc5;
+  --ring-subtle: #dedc01;
+  --ring-deep: #c2c0b6;
+  
+  /* Shadows - Ring-based (Claude's signature) */
+  --shadow-whisper: rgba(0, 0, 0, 0.05) 0px 4px 24px;
+  --shadow-ring: 0px 0px 0px 1px;
+  
+  /* Typography */
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', Consolas, monospace;
+  
+  /* Spacing */
+  --space-unit: 8px;
+  
+  /* Radius - Claude uses generous rounding */
+  --radius-sharp: 4px;
+  --radius-subtle: 6px;
+  --radius-comfortable: 8px;
+  --radius-generous: 12px;
+  --radius-very: 16px;
+  --radius-max: 32px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Tailwind integration with Claude colors */
+  --color-parchment: var(--parchment);
+  --color-ivory: var(--ivory);
+  --color-warm-sand: var(--warm-sand);
+  --color-terracotta: var(--terracotta);
+  --color-coral: var(--coral-accent);
+  --color-charcoal: var(--charcoal-warm);
+  --color-olive: var(--olive-gray);
+  --color-stone: var(--stone-gray);
+  --color-near-black: var(--near-black);
+  --color-border-cream: var(--border-cream);
+  --color-border-warm: var(--border-warm);
+  
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --parchment: #1a1a18;
+    --ivory: #222220;
+    --warm-sand: #2a2a27;
+    --near-black: #f5f4ed;
+    --charcoal-warm: #b0aea5;
+    --olive-gray: #87867f;
+    --stone-gray: #5e5d59;
+    --terracotta: #c96442;
+    --border-cream: #30302e;
+    --border-warm: #3d3d3a;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--parchment);
+  color: var(--near-black);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 卡片悬停效果 */
+/* Serif headings (from Claude's editorial hierarchy) */
+h1, h2, h3, .font-serif {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* Claude-style interactive ring shadows */
+.claude-ring {
+  box-shadow: 0px 0px 0px 1px var(--ring-warm);
+}
+
+.claude-ring:hover {
+  box-shadow: 0px 0px 0px 1px var(--ring-deep);
+}
+
+.claude-card {
+  background: var(--ivory);
+  border: 1px solid var(--border-cream);
+  border-radius: var(--radius-comfortable);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 24px;
+}
+
+/* Warm CTA button (Claude's Brand Terracotta) */
+.btn-primary {
+  background: var(--terracotta);
+  color: var(--ivory);
+  border-radius: var(--radius-generous);
+  box-shadow: 0px 0px 0px 1px var(--terracotta);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: var(--coral-accent);
+  box-shadow: 0px 0px 0px 1px var(--coral-accent);
+}
+
+/* Secondary warm button */
+.btn-secondary {
+  background: var(--warm-sand);
+  color: var(--charcoal-warm);
+  border-radius: var(--radius-comfortable);
+  box-shadow: 0px 0px 0px 1px var(--ring-warm);
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  box-shadow: 0px 0px 0px 1px var(--ring-deep);
+}
+
+/* Card hover - subtle lift */
+.card-hover {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-hover:hover {
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 8px 32px;
+  transform: translateY(-2px);
+}
+
+/* Line clamp utility */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Related items hover */
+.related-item:hover {
+  background: var(--warm-sand) !important;
+}
+
+/* Footer links hover */
+footer a:hover {
+  color: var(--terracotta) !important;
 }

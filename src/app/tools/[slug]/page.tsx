@@ -36,15 +36,28 @@ export default async function ToolDetailPage({ params }: Props) {
     .slice(0, 3)
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <main className="min-h-screen" style={{ background: 'var(--parchment)' }}>
       {/* 顶部导航 */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-4">
-          <Link href="/" className="text-orange-500 hover:text-orange-600 font-medium flex items-center gap-1">
+      <div 
+        className="border-b"
+        style={{ 
+          background: 'var(--ivory)',
+          borderColor: 'var(--border-warm)'
+        }}
+      >
+        <div 
+          className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-4"
+          style={{ color: 'var(--stone-gray)' }}
+        >
+          <Link 
+            href="/" 
+            className="font-medium flex items-center gap-1 transition-colors hover:opacity-80"
+            style={{ color: 'var(--terracotta)' }}
+          >
             ← 返回首页
           </Link>
-          <span className="text-gray-300">|</span>
-          <span className="text-gray-500 text-sm">测评详情</span>
+          <span style={{ color: 'var(--border-warm)' }}>|</span>
+          <span className="text-sm">测评详情</span>
         </div>
       </div>
 
@@ -53,26 +66,45 @@ export default async function ToolDetailPage({ params }: Props) {
           {/* 左侧主信息 */}
           <div className="lg:col-span-2">
             {/* 封面 */}
-            <div className="relative rounded-2xl overflow-hidden h-64 mb-6">
+            <div 
+              className="relative rounded-2xl overflow-hidden mb-6"
+              style={{ height: '280px' }}
+            >
               <img
                 src={tool.coverImage}
                 alt={tool.name}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div 
+                className="absolute inset-0" 
+                style={{ 
+                  background: 'linear-gradient(to top, rgba(20,20,19,0.7) 0%, transparent 60%)'
+                }}
+              />
               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
                 <div className="flex items-center gap-3">
                   <span className="text-5xl">{tool.icon}</span>
                   <div>
-                    <h1 className="text-2xl font-black text-white">{tool.name}</h1>
+                    <h1 
+                      className="text-2xl font-bold text-white"
+                      style={{ fontFamily: 'var(--font-serif)', fontWeight: 500 }}
+                    >
+                      {tool.name}
+                    </h1>
                     <div className="flex gap-2 mt-1">
                       {tool.isSBTI && (
-                        <span className="px-2 py-0.5 bg-orange-500 text-white text-xs font-bold rounded-full">
+                        <span 
+                          className="px-2 py-0.5 text-white text-xs font-bold rounded-full"
+                          style={{ background: 'var(--terracotta)' }}
+                        >
                           🔥 SBTI
                         </span>
                       )}
                       {tool.isHidden && (
-                        <span className="px-2 py-0.5 bg-purple-600 text-white text-xs font-bold rounded-full">
+                        <span 
+                          className="px-2 py-0.5 text-white text-xs font-bold rounded-full"
+                          style={{ background: '#6b21a8' }}
+                        >
                           🌙 隐藏人格
                         </span>
                       )}
@@ -83,52 +115,100 @@ export default async function ToolDetailPage({ params }: Props) {
             </div>
 
             {/* 描述 */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm mb-6">
-              <h2 className="font-bold text-lg mb-3">📝 测评简介</h2>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+            <div 
+              className="rounded-2xl p-6 mb-6"
+              style={{ 
+                background: 'var(--ivory)',
+                border: '1px solid var(--border-cream)',
+                boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 24px'
+              }}
+            >
+              <h2 
+                className="font-bold text-lg mb-3"
+                style={{ fontFamily: 'var(--font-serif)', color: 'var(--near-black)' }}
+              >
+                📝 测评简介
+              </h2>
+              <p 
+                className="leading-relaxed"
+                style={{ color: 'var(--olive-gray)', lineHeight: 1.7 }}
+              >
                 {tool.longDescription || tool.description}
               </p>
             </div>
 
             {/* 详细参数 */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm mb-6">
-              <h2 className="font-bold text-lg mb-4">📊 测评信息</h2>
+            <div 
+              className="rounded-2xl p-6 mb-6"
+              style={{ 
+                background: 'var(--ivory)',
+                border: '1px solid var(--border-cream)',
+                boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 24px'
+              }}
+            >
+              <h2 
+                className="font-bold text-lg mb-4"
+                style={{ fontFamily: 'var(--font-serif)', color: 'var(--near-black)' }}
+              >
+                📊 测评信息
+              </h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
-                  <div className="text-2xl mb-1">📝</div>
-                  <div className="text-2xl font-black text-orange-500">{tool.questionCount}</div>
-                  <div className="text-xs text-gray-500 mt-1">题目数量</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
-                  <div className="text-2xl mb-1">⏱️</div>
-                  <div className="text-2xl font-black text-orange-500">{tool.duration}</div>
-                  <div className="text-xs text-gray-500 mt-1">预估分钟</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
-                  <div className="text-2xl mb-1">★</div>
-                  <div className="text-2xl font-black text-orange-500">{tool.score.toFixed(1)}</div>
-                  <div className="text-xs text-gray-500 mt-1">用户评分</div>
-                </div>
-                <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
-                  <div className="text-2xl mb-1">👤</div>
-                  <div className="text-2xl font-black text-orange-500">{tool.reviewCount >= 1000 ? `${(tool.reviewCount / 1000).toFixed(1)}k` : tool.reviewCount}</div>
-                  <div className="text-xs text-gray-500 mt-1">评价人数</div>
-                </div>
+                {[
+                  { icon: '📝', value: tool.questionCount, label: '题目数量' },
+                  { icon: '⏱️', value: tool.duration, label: '预估分钟' },
+                  { icon: '★', value: tool.score.toFixed(1), label: '用户评分' },
+                  { icon: '👤', value: tool.reviewCount >= 1000 ? `${(tool.reviewCount / 1000).toFixed(1)}k` : tool.reviewCount, label: '评价人数' },
+                ].map((item, idx) => (
+                  <div 
+                    key={idx}
+                    className="text-center p-4 rounded-xl"
+                    style={{ background: 'var(--warm-sand)' }}
+                  >
+                    <div className="text-2xl mb-1">{item.icon}</div>
+                    <div 
+                      className="text-2xl font-bold"
+                      style={{ color: 'var(--terracotta)' }}
+                    >
+                      {item.value}
+                    </div>
+                    <div 
+                      className="text-xs mt-1"
+                      style={{ color: 'var(--stone-gray)' }}
+                    >
+                      {item.label}
+                    </div>
+                  </div>
+                ))}
               </div>
 
               <div className="mt-4 flex flex-wrap gap-2 items-center">
-                <span className="text-sm text-gray-500">适合人群：</span>
+                <span className="text-sm" style={{ color: 'var(--stone-gray)' }}>适合人群：</span>
                 {tool.audience.map(a => (
-                  <span key={a} className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-300 text-sm rounded-full">
+                  <span 
+                    key={a} 
+                    className="px-3 py-1 text-sm rounded-full"
+                    style={{ 
+                      background: 'var(--warm-sand)',
+                      color: 'var(--charcoal-warm)'
+                    }}
+                  >
                     {a}
                   </span>
                 ))}
               </div>
 
               <div className="mt-3 flex flex-wrap gap-2 items-center">
-                <span className="text-sm text-gray-500">标签：</span>
+                <span className="text-sm" style={{ color: 'var(--stone-gray)' }}>标签：</span>
                 {tool.tags.map(tag => (
-                  <span key={tag} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-sm rounded-full">
+                  <span 
+                    key={tag} 
+                    className="px-3 py-1 text-sm rounded-full"
+                    style={{ 
+                      background: 'var(--ivory)',
+                      border: '1px solid var(--border-warm)',
+                      color: 'var(--olive-gray)'
+                    }}
+                  >
                     {tag}
                   </span>
                 ))}
@@ -136,49 +216,80 @@ export default async function ToolDetailPage({ params }: Props) {
             </div>
 
             {/* 广告位占位 */}
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-2xl p-6 text-center border-2 border-dashed border-gray-300 dark:border-gray-600 mb-6">
-              <span className="text-gray-400">📢 广告位（Google AdSense / 百度联盟）</span>
+            <div 
+              className="rounded-2xl p-6 text-center mb-6"
+              style={{ 
+                border: '2px dashed var(--border-warm)',
+                background: 'var(--warm-sand)'
+              }}
+            >
+              <span style={{ color: 'var(--stone-gray)' }}>📢 广告位（Google AdSense / 百度联盟）</span>
             </div>
           </div>
 
           {/* 右侧边栏 */}
           <div className="space-y-6">
-              {/* 主CTA */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg sticky top-6">
-                <ToolCTA url={tool.url} isAvailable={tool.isAvailable} />
-              <p className="text-center text-xs text-gray-400 mt-3">
+            {/* 主CTA */}
+            <div 
+              className="rounded-2xl p-6 sticky top-6"
+              style={{ 
+                background: 'var(--ivory)',
+                border: '1px solid var(--border-cream)',
+                boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 24px'
+              }}
+            >
+              <ToolCTA url={tool.url} isAvailable={tool.isAvailable} />
+              <p 
+                className="text-center text-xs mt-3"
+                style={{ color: 'var(--stone-gray)' }}
+              >
                 跳转到 {tool.name} 官方页面
               </p>
 
-              <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
+              <div 
+                className="mt-6 pt-6"
+                style={{ borderTop: '1px solid var(--border-warm)' }}
+              >
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-gray-500">评分</span>
-                  <span className="font-bold">★ {tool.score.toFixed(1)} / 5.0</span>
+                  <span style={{ color: 'var(--stone-gray)' }}>评分</span>
+                  <span className="font-bold" style={{ color: 'var(--near-black)' }}>
+                    ★ {tool.score.toFixed(1)} / 5.0
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-gray-500">使用人次</span>
-                  <span className="font-bold">👁 {tool.viewCount >= 1000 ? `${(tool.viewCount / 1000).toFixed(1)}k` : tool.viewCount}</span>
+                  <span style={{ color: 'var(--stone-gray)' }}>使用人次</span>
+                  <span className="font-bold" style={{ color: 'var(--near-black)' }}>
+                    👁 {tool.viewCount >= 1000 ? `${(tool.viewCount / 1000).toFixed(1)}k` : tool.viewCount}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">收录时间</span>
-                  <span className="font-bold">{tool.createdAt}</span>
+                  <span style={{ color: 'var(--stone-gray)' }}>收录时间</span>
+                  <span className="font-bold" style={{ color: 'var(--near-black)' }}>
+                    {tool.createdAt}
+                  </span>
                 </div>
               </div>
             </div>
 
             {/* 相关测评 */}
             {related.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
-                <h3 className="font-bold mb-4">🔥 相关测评</h3>
+              <div 
+                className="rounded-2xl p-6"
+                style={{ 
+                  background: 'var(--ivory)',
+                  border: '1px solid var(--border-cream)',
+                  boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 24px'
+                }}
+              >
+                <h3 
+                  className="font-bold mb-4"
+                  style={{ fontFamily: 'var(--font-serif)', color: 'var(--near-black)' }}
+                >
+                  🔥 相关测评
+                </h3>
                 <div className="space-y-3">
                   {related.map(t => (
-                    <Link key={t.id} href={`/tools/${t.slug}`} className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                      <span className="text-2xl">{t.icon}</span>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-sm truncate">{t.name}</div>
-                        <div className="text-xs text-gray-400">★ {t.score.toFixed(1)} · {t.duration}分钟</div>
-                      </div>
-                    </Link>
+                    <RelatedToolItem key={t.id} tool={t} />
                   ))}
                 </div>
               </div>
@@ -189,7 +300,16 @@ export default async function ToolDetailPage({ params }: Props) {
         {/* 底部相关测评卡片 */}
         {related.length > 0 && (
           <div className="mt-10">
-            <h2 className="text-xl font-black mb-6">更多{tool.category === 'sbti' ? 'SBTI' : '同类'}测评</h2>
+            <h2 
+              className="text-xl mb-6"
+              style={{ 
+                fontFamily: 'var(--font-serif)', 
+                fontWeight: 500,
+                color: 'var(--near-black)'
+              }}
+            >
+              更多{tool.category === 'sbti' ? 'SBTI' : '同类'}测评
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {related.map(t => (
                 <ToolCard key={t.id} tool={t} />
@@ -197,15 +317,49 @@ export default async function ToolDetailPage({ params }: Props) {
             </div>
           </div>
         )}
-
       </div>
 
       {/* 底部 */}
-      <footer className="border-t border-gray-200 dark:border-gray-700 py-8 mt-10">
-        <div className="max-w-5xl mx-auto px-4 text-center text-sm text-gray-500">
-          <p>© 2026 SBTI Tools Hub · 测评导航站 · 仅供娱乐</p>
+      <footer 
+        className="py-8 mt-10"
+        style={{ 
+          borderTop: '1px solid var(--border-warm)',
+          background: 'var(--ivory)'
+        }}
+      >
+        <div className="max-w-5xl mx-auto px-4 text-center">
+          <p style={{ color: 'var(--stone-gray)' }}>
+            © 2026 SBTI Tools Hub · 测评导航站 · 仅供娱乐
+          </p>
         </div>
       </footer>
     </main>
+  )
+}
+
+// 分离出需要交互的组件
+function RelatedToolItem({ tool }: { tool: { id: string, name: string, slug: string, icon: string, score: number, duration: number } }) {
+  return (
+    <Link 
+      href={`/tools/${tool.slug}`} 
+      className="flex items-center gap-3 p-2 rounded-xl transition-colors related-item"
+      style={{ background: 'var(--ivory)' }}
+    >
+      <span className="text-2xl">{tool.icon}</span>
+      <div className="flex-1 min-w-0">
+        <div 
+          className="font-medium text-sm truncate"
+          style={{ color: 'var(--near-black)' }}
+        >
+          {tool.name}
+        </div>
+        <div 
+          className="text-xs"
+          style={{ color: 'var(--stone-gray)' }}
+        >
+          ★ {tool.score.toFixed(1)} · {tool.duration}分钟
+        </div>
+      </div>
+    </Link>
   )
 }
